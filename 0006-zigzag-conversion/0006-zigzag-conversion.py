@@ -1,24 +1,21 @@
 class Solution:
     def convert(self, s: str, numRows: int) -> str:
-
-        if numRows == 1:
+        if numRows == 1 or numRows >= len(s):
             return s
 
-        rows = [""] * numRows
+        rows = [[] for _ in range(numRows)]
 
-        current_row = 0
-        going_down = False
+        row = 0
+        direction = 1
 
         for char in s:
+            rows[row].append(char)
 
-            rows[current_row] += char
-        
-            if current_row == 0 or current_row == numRows - 1:
-                going_down = not going_down
+            if row == 0:
+                direction = 1
+            elif row == numRows - 1:
+                direction = -1
 
-            if going_down:
-                current_row += 1
-            else:
-                current_row -= 1
+            row += direction
 
-        return ("".join(rows))
+        return "".join("".join(row) for row in rows)
